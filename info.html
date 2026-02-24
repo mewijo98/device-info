@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>System Recon</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  background: #000;
+  font-family: "Courier New", monospace;
+  color: #00ff9f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.terminal {
+  width: 420px;
+  background: #020617;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 25px rgba(0, 255, 159, 0.2);
+}
+
+.header {
+  color: #38bdf8;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.notice {
+  font-size: 12px;
+  color: #94a3b8;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background: #00ff9f;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  color: black;
+  margin-bottom: 15px;
+}
+
+.line {
+  font-size: 13px;
+  margin: 6px 0;
+  word-wrap: break-word;
+}
+
+.label {
+  color: #38bdf8;
+}
+
+.blink {
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="terminal">
+  <div class="header">
+    <h2>⚡ SYSTEM RECON PANEL ⚡</h2>
+  </div>
+
+  <div class="notice">
+    Ethical demo – Only browser-permitted device information is displayed.<br>
+    No camera / location / personal data accessed.
+  </div>
+
+  <button onclick="scan()">Run Scan</button>
+
+  <div id="output">
+    <div class="line blink">Awaiting scan...</div>
+  </div>
+</div>
+
+<script>
+function scan() {
+  const o = document.getElementById("output");
+
+  const ua = navigator.userAgent;
+  const deviceType = /Mobi|Android/i.test(ua) ? "Mobile" : "Desktop/Laptop";
+
+  const connection = navigator.connection || {};
+
+  o.innerHTML = `
+    <div class="line"><span class="label">[+] Device Type:</span> ${deviceType}</div>
+    <div class="line"><span class="label">[+] Platform:</span> ${navigator.platform}</div>
+    <div class="line"><span class="label">[+] OS / Browser:</span> ${ua}</div>
+    <div class="line"><span class="label">[+] Language:</span> ${navigator.language}</div>
+    <div class="line"><span class="label">[+] Screen Resolution:</span> ${screen.width} × ${screen.height}</div>
+    <div class="line"><span class="label">[+] Color Depth:</span> ${screen.colorDepth}</div>
+    <div class="line"><span class="label">[+] Timezone:</span> ${Intl.DateTimeFormat().resolvedOptions().timeZone}</div>
+    <div class="line"><span class="label">[+] CPU Cores:</span> ${navigator.hardwareConcurrency || "N/A"}</div>
+    <div class="line"><span class="label">[+] RAM:</span> ${navigator.deviceMemory ? navigator.deviceMemory + " GB" : "N/A"}</div>
+    <div class="line"><span class="label">[+] Online:</span> ${navigator.onLine}</div>
+    <div class="line"><span class="label">[+] Network Type:</span> ${connection.effectiveType || "N/A"}</div>
+    <div class="line"><span class="label">[+] Network Downlink:</span> ${connection.downlink ? connection.downlink + " Mb/s" : "N/A"}</div>
+  `;
+}
+</script>
+
+</body>
+</html>
